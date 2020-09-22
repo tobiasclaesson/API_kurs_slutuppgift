@@ -8,36 +8,36 @@ admin.initializeApp();
 
 
 const app = express();
-app.use(cors({ origin: ['http://127.0.0.1:5500'] }));
+app.use(cors({ origin: ['http://127.0.0.1:5500', 'https://api-slutuppgift-31665.web.app', 'https://api-slutuppgift-31665.firebaseapp.com'] }));
 
 
 app.get('/', async (req, res) =>{
-    const snapshot = await admin.firestore().collection('users').get();
+    const snapshot = await admin.firestore().collection('posts').get();
 
-    let users = [];
+    let posts = [];
     snapshot.forEach(doc =>{
         let id = doc.id;
         let data = doc.data();
 
-        users.push({id, ...data});
+        posts.push({id, ...data});
     });
 
-    res.status(200).send(JSON.stringify(users));
+    res.status(200).send(JSON.stringify(posts));
 })
 
 app.get('/:id', async (req, res) =>{
     const snapshot = await admin.firestore().collection("users").doc(req.params.id).get();
 
-    const userId = snapshot.id;
-    const userData = snapshot.data();
+    const postId = snapshot.id;
+    const postData = snapshot.data();
 
-    res.status(200).send(JSON.stringify({id: userId, ...userData}));
+    res.status(200).send(JSON.stringify({id: postId, ...postData}));
 
 })
 
 app.post('/', async (req, res) =>{
-    const user = req.body;
-    await admin.firestore().collection('users').add(user);
+    const post = req.body;
+    await admin.firestore().collection('posts').add(post);
 
     res.status(201).send();
 })
@@ -45,7 +45,7 @@ app.post('/', async (req, res) =>{
 app.put('/:id', async (req, res) =>{
     const body = req.body;
 
-    await admin.firestore().collection('users').doc(req.params.id).update(body);
+    await admin.firestore().collection('posts').doc(req.params.id).update(body);
 
     res.status(200).send();
 })
@@ -53,11 +53,11 @@ app.put('/:id', async (req, res) =>{
 app.delete('/:id', async (req, res) =>{
     const body = req.body;
 
-    await admin.firestore().collection('users').doc(req.params.id).delete;
+    await admin.firestore().collection('posts').doc(req.params.id).delete;
 
     res.status(200).send();
 })
 
-exports.user = functions.https.onRequest(app);
+exports.post = functions.https.onRequest(app);
 
 
