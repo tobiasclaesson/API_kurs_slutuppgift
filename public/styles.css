@@ -1,5 +1,55 @@
-.post {
-    height: 30px;
-    background-color: beige;
-    margin-top: 5px;
+.inputContainer{
+
+
 }
+.titleInputContainer{
+    font-size: 14px;
+
+}
+.descInputContainer{
+    font-size: 14px;
+}
+.post {
+    
+
+    background-color: beige;
+    display: inline-block;
+    margin: 10px;
+    
+    max-width: 33%;
+}
+
+.postDeleteButton {
+    
+    color: red;
+    border: none;
+    background-color: beige;
+    margin: 15px;
+    
+    float: right;
+    
+}
+.postHeader{
+    
+
+}
+
+.postTitle {
+    padding-left: 10px;
+    float: left;
+
+    
+}
+
+.postText {
+
+
+    clear: both;
+    word-wrap: break-word;
+    background-color: beige;
+    width: 90%;
+    border: none;
+    padding: 10px;
+}
+
+

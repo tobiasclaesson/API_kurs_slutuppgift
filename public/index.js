@@ -1,26 +1,38 @@
 
 
-const url = 'https://us-central1-api-slutuppgift-31665.cloudfunctions.net/post';
+//const url = 'https://us-central1-api-slutuppgift-31665.cloudfunctions.net/post/';
+const url = 'http://localhost:5001/api-slutuppgift-31665/us-central1/post/';
 
 
 let posts = [];
 let selectedPost = {};
 
-const nameInput = document.querySelector('#nameInput');
+const titleInput = document.querySelector('#titleInput');
+const descInput = document.querySelector('#descInput');
 const createUserButton = document.querySelector('#createUserButton');
 const postTable = document.querySelector("#postContainer");
 
-function renderPostTable() {
-    let tableRow = "";
+function renderPosts() {
+    let postsDiv = "";
 
     posts.forEach(post => {
-        tableRow += 
-        `<div class='post' id=${post.id} onclick="showEditSection(this.id)">${post.name} ${post.id}</div>
-        <button onclick="deletePost()">delete</button>
+        console.log(post.id);
+        postsDiv += 
+        `<div class='post' onclick="" id=${post.id} >
+        <span class='postHeader'>
+        <p class='postTitle'>${post.title}</p>
+        <button class='postDeleteButton' id=${post.id} onclick="showEditSection(this.id), deletePost() ">X</button>
+
+        </span>
+        <input id=${post.id} onblur="showEditSection(this.id), updatePost(this.value)" type="text" value="${post.desc}" class='postText'></input>
+        </div>
+        
+        
+        
         `;
     });
-
-    postTable.innerHTML = tableRow;
+    
+    postTable.innerHTML = postsDiv;
 }
 
 const showEditSection = (postId) => {
@@ -30,9 +42,9 @@ const showEditSection = (postId) => {
 
     selectedPost = postId;
     
-    console.log(selectedPost);
-    deletePost();
-    console.log(selectedPost);
+
+
+
 }
 
 const getPosts = async () => {
@@ -41,7 +53,7 @@ const getPosts = async () => {
 
         if(response.ok) {
             posts = await response.json();
-            renderPostTable();
+            renderPosts();
         }
         else {
             throw new Error(response.statusText);
@@ -52,10 +64,9 @@ const getPosts = async () => {
 }
 
 const createPost = async () => {
-    console.log('hej');
-    const newPost = { name: nameInput.value };
-    console.log(newPost);
-    if(!newPost.name){
+    const newPost = { title: titleInput.value, desc: descInput.value};
+    //console.log(newPost);
+    if(!newPost.title || !newPost.desc){
         
         return;
     }
@@ -68,13 +79,56 @@ const createPost = async () => {
             },
             body: JSON.stringify(newPost)
         });
-        console.log(response);
 
         if(response.ok){
-
+            const body = await response.text();
+            console.log(body);
+            newPost.id = body;
+            
             posts.push(newPost);
+            //console.log(posts);
+            renderPosts();
+            
+        } else{
+            throw new Error(response.statusText);
+        }
+
+
+    } catch (err) {
+        throw err;
+    }
+}
+
+const updatePost = async (newValue) => {
+    
+    if(!selectedPost) {
+        throw new Error('No post id found.');
+    }
+    console.log(newValue);
+    const newObject = { desc: newValue};
+    try{
+        const response = await fetch(url + selectedPost, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newObject)
+        });
+
+        if(response.ok){
+            const body = await response.text();
+
+            posts.forEach(post => {
+                if(post.id === selectedPost){
+                    post.desc = newValue
+                }
+                
+
+            })
+            
+            //posts.push(newValue);
             console.log(posts);
-            renderPostTable();
+            renderPosts();
             
         } else{
             throw new Error(response.statusText);
@@ -88,18 +142,21 @@ const createPost = async () => {
 
 const deletePost = async () => {
     if(!selectedPost) {
-        throw new Error('No user id found.');
+        throw new Error('No post id found.');
     }
+    console.log(selectedPost);
     try {
         const response = await fetch(url + selectedPost, {
             method: 'DELETE',
-            
+            headers: {
+                
+            }
         });
         
         if(response.ok) { 
             console.log(response);
             posts = posts.filter(post => post.id !== selectedPost);
-            renderPostTable();
+            renderPosts();
         }
         else {
             throw new Error(response.statusText);

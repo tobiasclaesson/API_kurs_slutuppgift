@@ -8,14 +8,22 @@
 
   </head>
   <body>
-    <div>
-      <input type="text" id='nameInput'>
+    <div class="inputContainer">
+      <div class="titleInputContainer">
+        <label for="titleInput">Title</label>
+        <input type="text" id='titleInput'>
+
+      </div>
+      <div class="descInputContainer">
+        <label for="descInput">Description</label>
+        <input type="text" id="descInput">
+
+      </div>
       <button id='createUserButton'>create</button>
-      
-      <div id="postContainer"></div>
       
       
     </div>
+    <div id="postContainer"></div>
 
     <script src="index.js"></script>
   </body>
