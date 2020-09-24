@@ -1,7 +1,7 @@
 
 
-//const url = 'https://us-central1-api-slutuppgift-31665.cloudfunctions.net/post/';
-const url = 'http://localhost:5001/api-slutuppgift-31665/us-central1/post/';
+const url = 'https://us-central1-api-slutuppgift-31665.cloudfunctions.net/post/';
+//const url = 'http://localhost:5001/api-slutuppgift-31665/us-central1/post/';
 
 
 let posts = [];
@@ -24,7 +24,7 @@ function renderPosts() {
         <button class='postDeleteButton' id=${post.id} onclick="showEditSection(this.id), deletePost() ">X</button>
 
         </span>
-        <input id=${post.id} onblur="showEditSection(this.id), updatePost(this.value)" type="text" value="${post.desc}" class='postText'></input>
+        <textarea id=${post.id} onblur="showEditSection(this.id), updatePost(this.value)" name="text" wrap="soft"  class='postText' maxlength=105>${post.desc}</textarea>
         </div>
         
         

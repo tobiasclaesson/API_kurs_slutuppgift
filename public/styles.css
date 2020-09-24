@@ -5,9 +5,12 @@
 .titleInputContainer{
     font-size: 14px;
 
+
 }
 .descInputContainer{
+    word-wrap: break-word;
     font-size: 14px;
+
 }
 .post {
     
@@ -15,8 +18,8 @@
     background-color: beige;
     display: inline-block;
     margin: 10px;
-    
-    max-width: 33%;
+    height: 125px;
+    max-width: 300px;
 }
 
 .postDeleteButton {
@@ -24,7 +27,7 @@
     color: red;
     border: none;
     background-color: beige;
-    margin: 15px;
+    padding: 15px;
     
     float: right;
     
@@ -46,10 +49,15 @@
 
     clear: both;
     word-wrap: break-word;
+    word-break: break-all;
+    height: 50px;
+
     background-color: beige;
-    width: 90%;
+    width: 280px;
     border: none;
-    padding: 10px;
+    padding-left: 10px;
+    overflow: hidden;
+    resize: none;
 }
 
 
