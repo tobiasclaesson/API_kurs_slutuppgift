@@ -10,19 +10,22 @@
   <body>
     <div class="inputContainer">
       <div class="titleInputContainer">
-        <label for="titleInput">Title</label>
-        <input type="text" id='titleInput'>
-
+        <label class='titleLabel' for="titleInput">Title</label>
+        <br/>
+        <input class='titleInput' type="text" name='titleInput' id='titleInput' />
+       
       </div>
       <div class="descInputContainer">
-        <label for="descInput">Description</label>
-        <input type="text" id="descInput">
-
+        <label class='descLabel' for="descInput">Description</label>
+        <br/>
+        <textarea class='descInput' type="text" name='descInput' id="descInput" maxlength="105" wrap="soft"></textarea>
+        
       </div>
-      <button id='createUserButton'>create</button>
-      
-      
+      <button class='createButton' id='createPostButton'>Create Post</button>
     </div>
+      
+      
+    
     <div id="postContainer"></div>
 
     <script src="index.js"></script>

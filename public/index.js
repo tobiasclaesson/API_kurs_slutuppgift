@@ -9,7 +9,7 @@ let selectedPost = {};
 
 const titleInput = document.querySelector('#titleInput');
 const descInput = document.querySelector('#descInput');
-const createUserButton = document.querySelector('#createUserButton');
+const createUserButton = document.querySelector('#createPostButton');
 const postTable = document.querySelector("#postContainer");
 
 function renderPosts() {
@@ -33,6 +33,11 @@ function renderPosts() {
     });
     
     postTable.innerHTML = postsDiv;
+}
+
+const clearInput = () => {
+    titleInput.value = "";
+    descInput.value = "";
 }
 
 const showEditSection = (postId) => {
@@ -88,6 +93,7 @@ const createPost = async () => {
             posts.push(newPost);
             //console.log(posts);
             renderPosts();
+            clearInput();
             
         } else{
             throw new Error(response.statusText);
@@ -105,7 +111,7 @@ const updatePost = async (newValue) => {
         throw new Error('No post id found.');
     }
     console.log(newValue);
-    const newObject = { desc: newValue};
+    const newObject = { desc:newValue}
     try{
         const response = await fetch(url + selectedPost, {
             method: 'PUT',
@@ -169,3 +175,5 @@ const deletePost = async () => {
 
 getPosts();
 createUserButton.addEventListener('click', createPost);
+
+
